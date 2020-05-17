@@ -20,7 +20,7 @@ export default function Trainings() {
         {
             Header: 'Date',
             accessor: 'date',
-            Cell: row => moment(row).format('MMMM Do YYYY')
+            Cell: row => moment(row.value).format('MMMM Do YYYY')
         },
         {
             Header: 'Duration',
