@@ -6,13 +6,22 @@ import moment from 'moment';
 export default function Trainings() {
 
     useEffect(() => fetchData(), []);
+    useEffect(() => fetchData2(), []);
 
     const [training, setTraining] = useState([]);
+    const [person, setPerson] = useState([]);
 
     const fetchData = () => {
         fetch('https://customerrest.herokuapp.com/api/trainings')
         .then(response => response.json())
         .then(data => setTraining(data.content))
+        .catch(err => console.error(err))
+    }
+
+    const fetchData2 = () => {
+        fetch('https://customerrest.herokuapp.com/api/trainings')
+        .then(response => response.json())
+        .then(data => setPerson(data.content.links[2].href))
         .catch(err => console.error(err))
     }
 
@@ -29,11 +38,15 @@ export default function Trainings() {
         {
             Header: 'Activity',
             accessor: 'activity'
+        },
+        {
+            Header: 'Customer',
+            accessor: 'links[2].href'
         }
     ]
 
 
     return (
-        <ReactTable filterable={true} data={training} columns={columns} />
+        <ReactTable filterable={true} data={training} data={person} columns={columns} />
     )
 }
